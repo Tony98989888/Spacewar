@@ -5,7 +5,9 @@ namespace AIDemo
 {
     public enum DialogScene
     {
-        Prologue,
+        Stage_1,
+        Beginning,
+        Stage_2
     }
 
     [CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue")]
