@@ -1,59 +1,79 @@
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.Events;
 
-public class DialogManager : MonoBehaviour
+namespace AIDemo
 {
-    public TMP_Text speakerNameText;
-    public TMP_Text dialogueText;
-    public GameObject dialoguePanel;
-
-    private Queue<DialogueData.DialogueEntry> dialogueQueue;
-
-    void Start()
+    public class DialogManager : MonoBehaviour
     {
-        dialogueQueue = new Queue<DialogueData.DialogueEntry>();
-        dialoguePanel.SetActive(false);
-    }
+        public TMP_Text speakerNameText;
+        public TMP_Text dialogueText;
+        public GameObject dialoguePanel;
 
-    public void StartDialogue(DialogueData dialogueData)
-    {
-        dialogueQueue.Clear();
+        private DialogueData _currentDialogue;
+    
+        private Queue<DialogueData.DialogueEntry> dialogueQueue;
+        
+        [System.Serializable]
+        public class OnDialogEndHandler : UnityEvent<DialogueData> { }
 
-        foreach (var dialogueEntry in dialogueData.dialogues)
+        public OnDialogEndHandler onDialogEnd;
+    
+        void Start()
         {
-            dialogueQueue.Enqueue(dialogueEntry);
+            dialogueQueue = new Queue<DialogueData.DialogueEntry>();
+            dialoguePanel.SetActive(false);
         }
-
-        dialoguePanel.SetActive(true);
-        DisplayNextDialogue();
-    }
-
-    public void DisplayNextDialogue()
-    {
-        if (dialogueQueue.Count == 0)
+    
+        public void StartDialogue(DialogueData dialogueData)
         {
-            EndDialogue();
-            return;
-        }
+            dialogueQueue.Clear();
 
-        var dialogueEntry = dialogueQueue.Dequeue();
-        speakerNameText.text = dialogueEntry.speakerName;
-        dialogueText.text = dialogueEntry.dialogueText;
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && dialoguePanel.activeInHierarchy)
-        {
+            _currentDialogue = dialogueData;
+    
+            foreach (var dialogueEntry in dialogueData.dialogues)
+            {
+                dialogueQueue.Enqueue(dialogueEntry);
+            }
+    
+            dialoguePanel.SetActive(true);
             DisplayNextDialogue();
         }
-    }
-
-    void EndDialogue()
-    {
-        dialoguePanel.SetActive(false);
+    
+        public void DisplayNextDialogue()
+        {
+            if (dialogueQueue.Count == 0)
+            {
+                EndDialogue();
+                return;
+            }
+    
+            var dialogueEntry = dialogueQueue.Dequeue();
+            speakerNameText.text = dialogueEntry.speakerName;
+            dialogueText.text = dialogueEntry.dialogueText;
+        }
+    
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0) && dialoguePanel.activeInHierarchy)
+            {
+                DisplayNextDialogue();
+            }
+        }
+    
+        void EndDialogue()
+        {
+            if (!dialoguePanel.activeInHierarchy)
+            {
+                return;
+            }
+            dialoguePanel.SetActive(false);
+            onDialogEnd?.Invoke(_currentDialogue);
+            _currentDialogue = null;
+        }
     }
 }
+
+

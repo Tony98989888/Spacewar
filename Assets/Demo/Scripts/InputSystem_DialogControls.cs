@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using VSX.UniversalVehicleCombat;
 
-public class InputSystem_DialogControls : GeneralInput 
+
+namespace AIDemo
 {
+    public class InputSystem_DialogControls : GeneralInput 
+    {
         protected DialogInputAssets input;
 
         [SerializeField] private DialogManager dialogManager;
@@ -28,4 +29,5 @@ public class InputSystem_DialogControls : GeneralInput
         {
             input.Disable();
         }
+    }
 }

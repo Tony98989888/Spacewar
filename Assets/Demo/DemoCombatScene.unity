@@ -191,9 +191,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e074ba7a2424c46bd4665dff58d6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: OBJECTIVE
-  trackableType: {fileID: 11400000, guid: e779fd85d949f214b9caafef24ce78ae, type: 2}
-  team: {fileID: 11400000, guid: f6183930511df324ca41846a92df975f, type: 2}
+  label: TARGET
+  trackableType: {fileID: 11400000, guid: 6a9b6d21508783741806ac7dc9d22306, type: 2}
+  team: {fileID: 11400000, guid: 8799821b43f226c4fa80c7d344bdbb5b, type: 2}
   trackingBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 5, y: 5, z: 5}
@@ -204,7 +204,27 @@ MonoBehaviour:
   registrationOrder: 0
   rootTransform: {fileID: 80147469}
   childTrackables: []
-  variables: []
+  variables:
+  - listIndex: 0
+    key: Label
+    variableType: 4
+    isLinkedVariable: 0
+    objectValue: {fileID: 0}
+    boolValue: 0
+    intValue: 0
+    floatValue: 0
+    stringValue: OBJECTIVE
+    vector3Value: {x: 0, y: 0, z: 0}
+    targetObject: {fileID: 0}
+    targetComponent: {fileID: 0}
+    methodInfoName: 
+    numArgs: 0
+    arg0Type: 
+    arg0BoolValue: 0
+    arg0IntValue: 0
+    arg0FloatValue: 0
+    arg0StringValue: 
+    arg0ObjectValue: {fileID: 0}
   onSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -736,7 +756,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &545848758
 Transform:
   m_ObjectHideFlags: 0
@@ -949,6 +969,18 @@ MonoBehaviour:
   fullRiskProximity: 2500
   useMemory: 1
   obstacleMemoryTime: 3
+--- !u!114 &640062848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1263674834715864249, guid: 45629360088764e4188898036b3348a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1937511493}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85aa0f1323312e3479982784cd2ad965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &646449601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,6 +1184,9 @@ MonoBehaviour:
   speakerNameText: {fileID: 646449604}
   dialogueText: {fileID: 1005526572}
   dialoguePanel: {fileID: 1432949375}
+  onDialogEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &723106920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1218,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogManager: {fileID: 703077825}
   prologue: {fileID: 11400000, guid: 95c013634b628874aa20e8f6862b6e66, type: 2}
+  wayPointTrigger: {fileID: 80147470}
+  pauseState: {fileID: 11400000, guid: e79e5dc77d644bd44b10eb4d9e703d44, type: 2}
+  gameplayState: {fileID: 11400000, guid: cd7d5c1357684894f994fbf8614020c8, type: 2}
+  playerInput: {fileID: 640062848}
 --- !u!4 &723106922
 Transform:
   m_ObjectHideFlags: 0
@@ -2160,6 +2199,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139967447336905940, guid: 5bdcbf790d256914ebf95d877b0d0f50,
+        type: 3}
+      propertyPath: gameStates.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139967447336905940, guid: 5bdcbf790d256914ebf95d877b0d0f50,
+        type: 3}
+      propertyPath: gameStates.Array.data[8].gameState
+      value: 
+      objectReference: {fileID: 11400000, guid: e79e5dc77d644bd44b10eb4d9e703d44,
+        type: 2}
+    - target: {fileID: 2139967447336905940, guid: 5bdcbf790d256914ebf95d877b0d0f50,
+        type: 3}
+      propertyPath: gameStates.Array.data[8].showCursor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139967447336905940, guid: 5bdcbf790d256914ebf95d877b0d0f50,
+        type: 3}
+      propertyPath: gameStates.Array.data[8].pauseBeforeEntry
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139967447336905940, guid: 5bdcbf790d256914ebf95d877b0d0f50,
+        type: 3}
+      propertyPath: gameStates.Array.data[8].centerCursorAtStart
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7187296310366122442, guid: 5bdcbf790d256914ebf95d877b0d0f50,
         type: 3}
@@ -3875,6 +3940,28 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8307786451145987815, guid: bfb4e62c148bb074b91ba5ccba7d04a1,
+        type: 3}
+      propertyPath: targetBoxOverrides.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307786451145987815, guid: bfb4e62c148bb074b91ba5ccba7d04a1,
+        type: 3}
+      propertyPath: targetBoxOverrides.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 114306347424565044, guid: ad621796ba332cc43a852213fe4dc801,
+        type: 3}
+    - target: {fileID: 8307786451145987815, guid: bfb4e62c148bb074b91ba5ccba7d04a1,
+        type: 3}
+      propertyPath: targetBoxOverrides.Array.data[2].trackableTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307786451145987815, guid: bfb4e62c148bb074b91ba5ccba7d04a1,
+        type: 3}
+      propertyPath: targetBoxOverrides.Array.data[2].trackableTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a9b6d21508783741806ac7dc9d22306,
+        type: 2}
     - target: {fileID: 8739353179030934374, guid: bfb4e62c148bb074b91ba5ccba7d04a1,
         type: 3}
       propertyPath: m_textInfo.lineCount

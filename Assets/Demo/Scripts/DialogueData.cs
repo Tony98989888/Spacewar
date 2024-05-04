@@ -1,15 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue")]
-public class DialogueData : ScriptableObject
+namespace AIDemo
 {
-    [System.Serializable]
-    public struct DialogueEntry
+    public enum DialogScene
     {
-        public string speakerName;
-        [TextArea] public string dialogueText;
+        Prologue,
     }
 
-    public List<DialogueEntry> dialogues = new List<DialogueEntry>();
+    [CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue")]
+    public class DialogueData : ScriptableObject
+    {
+        [System.Serializable]
+        public struct DialogueEntry
+        {
+            public string speakerName;
+            [TextArea] public string dialogueText;
+        }
+
+        public List<DialogueEntry> dialogues = new List<DialogueEntry>();
+        public DialogScene dialogScene;
+    }
 }

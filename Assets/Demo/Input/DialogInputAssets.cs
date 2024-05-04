@@ -41,7 +41,7 @@ public partial class @DialogInputAssets: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a92cfb01-91c4-4f48-8efb-538dd8df995f"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

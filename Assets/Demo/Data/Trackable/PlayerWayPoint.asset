@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b8a4a5fb6aebb84097c4cc2e6b533f7, type: 3}
-  m_Name: Neutral
+  m_Script: {fileID: 11500000, guid: a9c5abc48a1b6664593a77af0dd144f0, type: 3}
+  m_Name: PlayerWayPoint
   m_EditorClassIdentifier: 
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  hostileTeams:
-  - {fileID: 0}
+  Label: 
