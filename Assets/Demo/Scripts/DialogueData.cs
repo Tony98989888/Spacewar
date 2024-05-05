@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AIDemo
 {
-    public enum DialogScene
+    public enum DialogScenario
     {
-        Stage_1,
-        Beginning,
-        Stage_2
+        DefendFirstRound,
+        FollowWaypoints,
+        DefendCaptain
     }
 
     [CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue")]
@@ -21,6 +22,6 @@ namespace AIDemo
         }
 
         public List<DialogueEntry> dialogues = new List<DialogueEntry>();
-        public DialogScene dialogScene;
+        [FormerlySerializedAs("dialogScene")] public DialogScenario dialogScenario;
     }
 }

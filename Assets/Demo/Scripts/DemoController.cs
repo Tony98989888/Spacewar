@@ -1,30 +1,30 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VSX.UniversalVehicleCombat;
 
 namespace AIDemo
 {
+    // Stage 0 - Weapons armed, defend yourself
+    // Stage 1 - Sure, follow these waypoints.
+    
     public enum DemoState
     {
-        Beginning,
+        Stage_0,
         Stage_1,
         Stage_2,
         Stage_3,
         Stage_4,
-        Stage_5
     }
 
     public class DemoController : MonoBehaviour
     {
         [SerializeField] private DialogManager dialogManager;
 
-        [SerializeField] private DialogueData dialog_1;
-        [SerializeField] private DialogueData dialog_2;
-        [SerializeField] private DialogueData dialog_3;
+        [FormerlySerializedAs("dialog_1")] [SerializeField] private DialogueData DefendFirstRound;
+        [FormerlySerializedAs("dialog_2")] [SerializeField] private DialogueData FollowWaypoints;
+        [FormerlySerializedAs("dialog_3")] [SerializeField] private DialogueData DefendCaptain;
         
         [SerializeField] private GameState gameplayState;
 
@@ -32,6 +32,8 @@ namespace AIDemo
 
         [SerializeField] private List<WaveController> waves;
         [SerializeField] private List<DemoStageTrigger> triggers;
+
+        [SerializeField] private GameObject wreckedShip;
 
         private DemoState _demoState;
 
@@ -47,7 +49,9 @@ namespace AIDemo
                 wave.gameObject.SetActive(false);
             }
             
-            _demoState = DemoState.Beginning;
+            _demoState = DemoState.Stage_0;
+            wreckedShip.gameObject.SetActive(false);
+            // Demo game flow begins here
             StartCoroutine(ExecuteAfterTime(1, ShowDialog_1));
         }
 
@@ -63,19 +67,21 @@ namespace AIDemo
 
         private void OnDialogEnd(DialogueData data)
         {
-            if (data.dialogScene == DialogScene.Beginning)
+            if (data.dialogScenario == DialogScenario.DefendFirstRound)
             {
+                // After ai says defend yourself spawn 1st round enemies
                 waves[0].gameObject.SetActive(true);
             }
             
-            if (data.dialogScene == DialogScene.Stage_1)
+            if (data.dialogScenario == DialogScenario.FollowWaypoints)
             {
+                // When ai says go follow the waypoints, 1st waypoint shows up
                 triggers[0].gameObject.SetActive(true);
             }
             
-            if (data.dialogScene == DialogScene.Stage_2)
+            if (data.dialogScenario == DialogScenario.DefendCaptain)
             {
-                waves[4].gameObject.SetActive(true);
+                waves[3].gameObject.SetActive(true);
             }
             
         }
@@ -88,21 +94,21 @@ namespace AIDemo
 
         void ShowDialog_1()
         {
-            dialogManager.StartDialogue(dialog_1);
+            dialogManager.StartDialogue(DefendFirstRound);
         }
 
-        public void ShowDialog_3()
+        public void OnShowProtectCaptainDialog()
         {
-            dialogManager.StartDialogue(dialog_3);
+            dialogManager.StartDialogue(DefendCaptain);
         }
 
         public void TriggerNextStage()
         {
             
-            if (_demoState == DemoState.Beginning)
+            if (_demoState == DemoState.Stage_0)
             {
                 _demoState = DemoState.Stage_1;
-                dialogManager.StartDialogue(dialog_2);
+                dialogManager.StartDialogue(FollowWaypoints);
                 return;
             }
             
@@ -116,6 +122,7 @@ namespace AIDemo
             if (_demoState == DemoState.Stage_2)
             {
                 _demoState = DemoState.Stage_3;
+                wreckedShip.gameObject.SetActive(true);
                 triggers[2].gameObject.SetActive(true);
                 return;
             }
@@ -123,18 +130,9 @@ namespace AIDemo
             if (_demoState == DemoState.Stage_3)
             {
                 _demoState = DemoState.Stage_4;
-                // Set wrecked ship visible
-                triggers[3].gameObject.SetActive(true);
+                // Final stage
                 return;
             }
-            
-            if (_demoState == DemoState.Stage_4)
-            {
-                _demoState = DemoState.Stage_5;
-                // Flow ends
-                return;
-            }
-            
         }
 
         public void SpawnWave(int index)

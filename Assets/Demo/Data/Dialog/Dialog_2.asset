@@ -34,4 +34,4 @@ MonoBehaviour:
     dialogueText: Alright, can you give me a course?
   - speakerName: 'AI:'
     dialogueText: Sure, follow these waypoints.
-  dialogScene: 0
+  dialogScenario: 1
